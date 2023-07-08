@@ -11,22 +11,18 @@ import { useGetGlobalValues } from "../../../hooks/useGlobalValues";
 import { Box } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import { useCallback } from "react";
 interface NavBarProps {
   activeTab: string;
-  setActiveTab: React.Dispatch<React.SetStateAction<string>>;
+  handleButtonChange: (tab: string) => void;
 }
-export default function SideNavBar({ activeTab, setActiveTab }: NavBarProps) {
+export default function SideNavBar({
+  activeTab,
+  handleButtonChange,
+}: NavBarProps) {
   const optionsList = useGetNavbarOptions();
   const { font, secondColor } = useGetGlobalValues();
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.down("sm"));
-  const handleButtonChange = useCallback(
-    (label: string) => {
-      setActiveTab(label);
-    },
-    [setActiveTab]
-  );
   return (
     <Box
       sx={{

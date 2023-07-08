@@ -22,7 +22,6 @@ export default function MainBox({ children }: MainBoxProps) {
           p: 3,
           borderRadius: "2rem",
           maxWidth: { xs: "99%", sm: "100%" },
-          minHeight: "87dvh",
           boxShadow: `0px 0px 2px ${theme.palette.text.primary}`,
         }}
       >

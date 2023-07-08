@@ -29,12 +29,12 @@ export default function Settings() {
       <Grid
         container
         direction={{ xs: "column", md: "row" }}
-        alignItems="flex-start"
-        justifyContent={{ xs: "start", md: "space-evenly" }}
+        alignItems={{ xs: "center", md: "flex-start" }}
+        justifyContent={{ xs: "center", md: "space-evenly" }}
       >
         {Object.entries(settingsByCategory).map(([category, settings]) => (
           <Grid item key={category} sx={{ mt: 10 }}>
-            <Grid container direction="column" spacing={4}>
+            <Grid container direction="column" spacing={{ xs: 1, md: 4 }}>
               <Grid item>
                 <Typography
                   sx={{
@@ -43,6 +43,7 @@ export default function Settings() {
                     textDecoration: "underline",
                     textDecorationColor: theme.palette.primary.main,
                     textUnderlineOffset: "0.5rem",
+                    textAlign: { xs: "center", md: "start" },
                   }}
                 >
                   {category}
@@ -50,58 +51,63 @@ export default function Settings() {
               </Grid>
               {settings.map((setting, index) => (
                 <Grid item key={index}>
-                  <Typography
-                    sx={{
-                      color: theme.palette.text.primary,
-                      fontSize: "90%",
-                    }}
+                  <Grid
+                    container
+                    direction="column"
+                    alignItems={{ xs: "center", md: "flex-start" }}
                   >
-                    {setting.name}
-                  </Typography>
-                  {setting.mode === "switch" ? (
-                    <Switch
-                      onChange={setting.action}
-                      checked={
-                        setting.value === "dark" || setting.value === true
-                      }
-                    />
-                  ) : null}
-                  {setting.mode === "select" ? (
-                    <FormControl fullWidth sx={{ my: 1 }}>
-                      <Select
-                        placeholder="Age"
+                    <Typography
+                      sx={{
+                        color: theme.palette.text.primary,
+                        fontSize: "90%",
+                      }}
+                    >
+                      {setting.name}
+                    </Typography>
+                    {setting.mode === "switch" ? (
+                      <Switch
+                        onChange={setting.action}
+                        checked={
+                          setting.value === "dark" || setting.value === true
+                        }
+                      />
+                    ) : null}
+                    {setting.mode === "select" ? (
+                      <FormControl fullWidth sx={{ my: 1 }}>
+                        <Select
+                          placeholder="Age"
+                          variant="outlined"
+                          size="small"
+                          value={selectedLang}
+                          onChange={handleChange}
+                        >
+                          {langs.map((lang) => (
+                            <MenuItem key={lang.code} value={lang.code}>
+                              {lang.lang}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
+                    ) : null}
+                    {setting.mode === "button" ? (
+                      <Button
+                        sx={{ textTransform: "none", my: 0.5 }}
                         variant="outlined"
                         size="small"
-                        value={selectedLang}
-                        onChange={handleChange}
                       >
-                        {langs.map((lang) => (
-                          <MenuItem key={lang.code} value={lang.code}>
-                            {lang.lang}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    </FormControl>
-                  ) : null}
-                  {setting.mode === "button" ? (
-                    <Button
-                      sx={{ textTransform: "none", my: 0.5 }}
-                      variant="outlined"
-                      size="small"
+                        {setting.buttonFill}
+                      </Button>
+                    ) : null}
+                    <Typography
+                      sx={{
+                        color: theme.palette.text.primary,
+                        opacity: 0.7,
+                        fontSize: "70%",
+                      }}
                     >
-                      {setting.buttonFill}
-                    </Button>
-                  ) : null}
-
-                  <Typography
-                    sx={{
-                      color: theme.palette.text.primary,
-                      opacity: 0.7,
-                      fontSize: "70%",
-                    }}
-                  >
-                    {setting.description}
-                  </Typography>
+                      {setting.description}
+                    </Typography>
+                  </Grid>
                 </Grid>
               ))}
             </Grid>

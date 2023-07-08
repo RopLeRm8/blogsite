@@ -46,8 +46,21 @@ export default function Notifications() {
           horizontal: "left",
         }}
         sx={{
+          mt: 2,
           ".MuiPaper-root": {
             backgroundColor: theme.palette.background.default,
+            maxHeight: "300px",
+            overflow: "auto",
+            "&::-webkit-scrollbar": {
+              width: "3px",
+            },
+            "&::-webkit-scrollbar-thumb": {
+              backgroundColor: theme.palette.text.primary,
+              borderRadius: "3px",
+            },
+            "&::-webkit-scrollbar-thumb:hover": {
+              backgroundColor: "rgba(0,0,0,.2)",
+            },
           },
         }}
       >

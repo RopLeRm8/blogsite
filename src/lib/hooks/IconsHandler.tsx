@@ -17,6 +17,8 @@ import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutline";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
+import CheckIcon from "@mui/icons-material/Check";
+import CloseIcon from "@mui/icons-material/Close";
 export default function IconsHandler() {
   const lockIcon = () => <LockIcon />;
   const manageIcon = () => <ManageAccountsIcon />;
@@ -37,6 +39,8 @@ export default function IconsHandler() {
   const visibleOffIcon = () => <VisibilityOffOutlinedIcon />;
   const usernameIcon = () => <DriveFileRenameOutlineIcon />;
   const friendRequestIcon = () => <PersonAddIcon />;
+  const confirmIcon = () => <CheckIcon />;
+  const closeIcon = () => <CloseIcon />;
   return {
     lockIcon,
     manageIcon,
@@ -57,5 +61,7 @@ export default function IconsHandler() {
     visibleOffIcon,
     usernameIcon,
     friendRequestIcon,
+    confirmIcon,
+    closeIcon,
   };
 }

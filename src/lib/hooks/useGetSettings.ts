@@ -15,16 +15,14 @@ export default function useGetSettings() {
   const [soundEffects, setSoundEffects] = useState<boolean | undefined>();
   useEffect(() => {
     const sfxValue = localStorage.getItem("sfx");
-    if (sfxValue === "none") {
-      setSoundEffects(false);
-    } else {
-      setSoundEffects(true);
-    }
+    setSoundEffects(sfxValue === "yes" ? true : false);
   }, []);
+
   useEffect(() => {
     const val = soundEffects ? "yes" : "none";
     localStorage.setItem("sfx", val);
   }, [soundEffects]);
+
   const ThemeContext = useContext(ThemeModeContext);
   const themeMode = ThemeContext?.themeMode;
   const setThemeMode = ThemeContext?.setThemeMode;
