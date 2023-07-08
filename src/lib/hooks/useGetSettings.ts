@@ -32,6 +32,7 @@ export default function useGetSettings() {
   const switchThemeMode = () => {
     const currentTheme = localStorage.getItem("theme");
     const newTheme = currentTheme === "light" ? "dark" : "light";
+
     setThemeMode(newTheme);
   };
   const handleSfxChange = () => {

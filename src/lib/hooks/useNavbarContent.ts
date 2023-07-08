@@ -1,7 +1,13 @@
-import { useState, useCallback } from "react";
-import AccountTab from "../ui/components/Dashboard/Account/AccountTab";
-import OverViewTab from "../ui/components/Dashboard/OverviewTab";
-import SettingsTab from "../ui/components/Dashboard/Settings/SettingsTab";
+import { useState, useCallback, lazy } from "react";
+const AccountTab = lazy(
+  () => import("../ui/components/Dashboard/Account/AccountTab")
+);
+const OverViewTab = lazy(
+  () => import("../ui/components/Dashboard/OverviewTab")
+);
+const SettingsTab = lazy(
+  () => import("../ui/components/Dashboard/Settings/SettingsTab")
+);
 import { useRedirect } from "./useRedirect";
 
 export default function useNavbarContent() {

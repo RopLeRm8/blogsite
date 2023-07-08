@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import SideNavBar from "./SideNavbar";
 import { Grid } from "@mui/material";
 import useNavbarContent from "../../../hooks/useNavbarContent";
@@ -52,13 +52,15 @@ export default function DashBoardPage() {
             py: 1,
           }}
         >
-          {ActiveComponent ? (
-            <ActiveComponent />
-          ) : LastActiveComponent ? (
-            <LastActiveComponent />
-          ) : (
-            <OverViewTab />
-          )}
+          <Suspense fallback={<div>Loading...</div>}>
+            {ActiveComponent ? (
+              <ActiveComponent />
+            ) : LastActiveComponent ? (
+              <LastActiveComponent />
+            ) : (
+              <OverViewTab />
+            )}
+          </Suspense>
         </Grid>
       </Grid>
     </>

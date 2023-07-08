@@ -1,12 +1,12 @@
 import { useCallback, useEffect } from "react";
 
-interface navbarData {
+interface NavbarData {
   name: string;
-  component?: () => JSX.Element;
+  component?: React.ComponentType<Record<string, unknown>>;
   action?: () => void;
 }
 interface DashboardHandler {
-  navbarData: navbarData[];
+  navbarData: NavbarData[];
   activeTab: string;
   setActiveTab: React.Dispatch<React.SetStateAction<string>>;
   confirmAction: () => void;
@@ -22,7 +22,8 @@ export default function useDashboardHandler({
   setLastTab,
 }: DashboardHandler) {
   const activeTabData = navbarData.find((tab) => tab.name === activeTab);
-  const ActiveComponent = activeTabData?.component || null;
+  const ActiveComponent: React.ComponentType<Record<string, unknown>> | null =
+    activeTabData?.component || null;
 
   const handleButtonChange = useCallback(
     (tab: string) => {
@@ -48,9 +49,9 @@ export default function useDashboardHandler({
     }
   }, [ActiveComponent, activeTab, setLastTab]);
 
-  const LastActiveComponent = navbarData.find(
-    (tab) => tab.name === lastTab
-  )?.component;
+  const LastActiveComponent: React.ComponentType<
+    Record<string, unknown>
+  > | null = navbarData.find((tab) => tab.name === lastTab)?.component || null;
   return {
     ActiveComponent,
     LastActiveComponent,

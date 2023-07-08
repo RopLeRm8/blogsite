@@ -41,7 +41,7 @@ export function CustomThemeProvider({ children }: ThemeProviderProps) {
   const { font, firstColor, secondColor } = useGetGlobalValues();
   const [themeMode, setThemeMode] = useState<string>(() => {
     const storedTheme = localStorage.getItem("theme");
-    return storedTheme ? storedTheme : "light";
+    return storedTheme ?? "light";
   });
   const theme = useMemo(
     () =>
