@@ -42,7 +42,7 @@ export default function useGetSettings() {
   const settings = [
     {
       category: "User preferences",
-      name: "Switch theme",
+      name: "Dark mode",
       description: "Change theme mode between dark and light",
       action: switchThemeMode,
       value: themeMode,
@@ -64,10 +64,10 @@ export default function useGetSettings() {
     },
     {
       category: "Other preferences",
-      name: "Poop",
-      description: "Man...",
+      name: "Test sound",
+      description: "Test it bruh",
       mode: "button",
-      buttonFill: "Poop now",
+      buttonFill: "Test if it works",
     },
   ];
   const settingsByCategory = settings.reduce(

@@ -8,16 +8,31 @@ import {
   MenuItem,
   Button,
   SelectChangeEvent,
+  styled,
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import useGetLanguages from "../../../../hooks/useGetLanguages";
 import { useState } from "react";
+import IconsHandler from "../../../../hooks/IconsHandler";
+interface IconContainer {
+  checked: boolean;
+}
 export default function Settings() {
+  const IconContainer = styled("div")<IconContainer>(({ theme, checked }) => ({
+    borderRadius: "50%",
+    width: "20px",
+    height: "20px",
+    backgroundColor: checked ? theme.CustomColors.backgroundColor : "black",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  }));
+
   const { settingsByCategory } = useGetSettings();
   const langs = useGetLanguages();
   const theme = useTheme();
   const [selectedLang, setSelectedLang] = useState("en");
-
+  const { darkModeIcon: DarkIcon, lightModeIcon: LightIcon } = IconsHandler();
   const handleChange = (event: SelectChangeEvent<string>) => {
     setSelectedLang(event.target.value);
   };
@@ -64,14 +79,32 @@ export default function Settings() {
                     >
                       {setting.name}
                     </Typography>
-                    {setting.mode === "switch" ? (
-                      <Switch
-                        onChange={setting.action}
-                        checked={
-                          setting.value === "dark" || setting.value === true
-                        }
-                      />
-                    ) : null}
+                    {setting.mode === "switch" &&
+                      (setting.name === "Dark mode" ? (
+                        <Switch
+                          onChange={setting.action}
+                          checked={
+                            setting.value === "dark" || setting.value === true
+                          }
+                          icon={
+                            <IconContainer checked={false}>
+                              <LightIcon />
+                            </IconContainer>
+                          }
+                          checkedIcon={
+                            <IconContainer checked={true}>
+                              <DarkIcon />
+                            </IconContainer>
+                          }
+                        />
+                      ) : (
+                        <Switch
+                          onChange={setting.action}
+                          checked={
+                            setting.value === "dark" || setting.value === true
+                          }
+                        />
+                      ))}
                     {setting.mode === "select" ? (
                       <FormControl fullWidth sx={{ my: 1 }}>
                         <Select

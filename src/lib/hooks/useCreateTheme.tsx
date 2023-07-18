@@ -13,6 +13,7 @@ interface DevicesColors {
 }
 
 interface CustomColors {
+  backgroundColor: string;
   mainColor: string;
   hoverColor: string;
   sideNavbar: string;
@@ -43,6 +44,7 @@ export function CustomThemeProvider({ children }: ThemeProviderProps) {
     const storedTheme = localStorage.getItem("theme");
     return storedTheme ?? "light";
   });
+  const backgroundColor = themeMode === "dark" ? "#1E1D25" : "#FFFFFF";
   const theme = useMemo(
     () =>
       createTheme({
@@ -51,7 +53,7 @@ export function CustomThemeProvider({ children }: ThemeProviderProps) {
         },
         palette: {
           background: {
-            default: themeMode === "dark" ? "#1E1D25" : "#FFFFFF",
+            default: backgroundColor,
           },
           mode: themeMode === "dark" ? "dark" : "light",
           primary: {
@@ -66,6 +68,7 @@ export function CustomThemeProvider({ children }: ThemeProviderProps) {
           },
         },
         CustomColors: {
+          backgroundColor: backgroundColor,
           mainColor: "#1c2536",
           hoverColor: firstColor,
           dangerColor: "#ed9291",
@@ -77,7 +80,7 @@ export function CustomThemeProvider({ children }: ThemeProviderProps) {
           },
         },
       }),
-    [themeMode, font, firstColor, secondColor]
+    [themeMode, font, firstColor, secondColor, backgroundColor]
   );
 
   useEffect(() => {

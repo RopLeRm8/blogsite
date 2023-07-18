@@ -19,6 +19,8 @@ import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutli
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
+import DarkModeIcon from "@mui/icons-material/DarkMode";
+import LightModeIcon from "@mui/icons-material/LightMode";
 export default function IconsHandler() {
   const lockIcon = () => <LockIcon />;
   const manageIcon = () => <ManageAccountsIcon />;
@@ -41,6 +43,8 @@ export default function IconsHandler() {
   const friendRequestIcon = () => <PersonAddIcon />;
   const confirmIcon = () => <CheckIcon />;
   const closeIcon = () => <CloseIcon />;
+  const darkModeIcon = () => <DarkModeIcon />;
+  const lightModeIcon = () => <LightModeIcon />;
   return {
     lockIcon,
     manageIcon,
@@ -63,5 +67,7 @@ export default function IconsHandler() {
     friendRequestIcon,
     confirmIcon,
     closeIcon,
+    darkModeIcon,
+    lightModeIcon,
   };
 }

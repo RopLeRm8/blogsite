@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import IconsHandler from "../../../../hooks/IconsHandler";
 import useGetNotifications from "../../../../hooks/useGetNotifications";
-import "../../../../../css/Notifications.css";
+import useGetAnimations from "../../../../hooks/useGetAnimations";
 export default function Notifications() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const {
@@ -20,6 +20,7 @@ export default function Notifications() {
     friendRequestIcon: FriendRequest,
   } = IconsHandler();
   const notificationsList = useGetNotifications();
+  const { pulse } = useGetAnimations();
   const theme = useTheme();
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -92,7 +93,7 @@ export default function Notifications() {
                   <Badge
                     variant="dot"
                     color="success"
-                    sx={{ animation: `pulse 2s infinite`, ml: 0.5 }}
+                    sx={{ animation: `${pulse} 2s infinite`, ml: 0.5 }}
                   />
                   <Typography
                     sx={{

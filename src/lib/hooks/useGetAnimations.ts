@@ -17,5 +17,28 @@ export default function useGetAnimations() {
     opacity: 0;
   }
 `;
-  return { fadeIn, fadeOut };
+  const pulse = keyframes`
+  0% {
+    transform: scale(0.95);
+    opacity: 0.7;
+  }
+  25% {
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(0.95);
+    opacity: 0.9;
+  }
+  75% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0.95);
+    opacity: 0.7;
+  }
+}
+`;
+  return { fadeIn, fadeOut, pulse };
 }
