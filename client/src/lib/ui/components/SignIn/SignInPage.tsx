@@ -12,11 +12,15 @@ import {
   Divider,
   IconButton,
   InputAdornment,
+  Slide,
+  Snackbar,
   useTheme,
 } from "@mui/material";
 import LinkText from "src/lib/ui/customElements/LinkText";
 import { useState } from "react";
 import useFormsHandlers from "src/lib/hooks/useFormsHandlers";
+import { useAuth } from "src/lib/hooks/api/useAuth";
+import useSnackbar from "src/lib/hooks/useSnackbar";
 export default function SignInPage() {
   const {
     lockIcon: LockIcon,
@@ -28,10 +32,39 @@ export default function SignInPage() {
   } = IconsHandler();
   const { font } = useGetGlobalValues();
   const theme = useTheme();
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState<boolean>(false);
   const { visibleHandler } = useFormsHandlers({ setVisible });
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [rememberMe, setRememberMe] = useState<boolean>(false);
+  const { request, loading, data, error, setError, setData } =
+    useAuth<string>();
+  const snackbar = useSnackbar({ error, data, setError, setData });
+  const handleLogin = async () => {
+    await request({
+      method: "POST",
+      url: "/api/user/login",
+      data: {
+        email,
+        password,
+        rememberMe,
+      },
+      withCredentials: true,
+    });
+  };
   return (
     <SpacingBox>
+      <Snackbar
+        open={!!error || !!data}
+        TransitionComponent={Slide}
+        autoHideDuration={4000}
+        onClose={() => {
+          setError(null);
+          setData(null);
+        }}
+      >
+        {snackbar()}
+      </Snackbar>
       <Grid container direction="column" alignItems="start">
         <Box
           sx={{ display: "flex", alignItems: "center", gap: ".5rem", mb: 3 }}
@@ -143,6 +176,7 @@ export default function SignInPage() {
               </InputAdornment>
             ),
           }}
+          onChange={(e) => setEmail(e.target.value)}
         />
         <TextField
           variant="outlined"
@@ -164,6 +198,7 @@ export default function SignInPage() {
               </InputAdornment>
             ),
           }}
+          onChange={(e) => setPassword(e.target.value)}
         />
         <Box
           sx={{
@@ -184,6 +219,7 @@ export default function SignInPage() {
                   color: theme.palette.text.primary,
                 },
               }}
+              onChange={() => setRememberMe((prev) => !prev)}
             />
             <Typography sx={{ color: theme.palette.text.primary }}>
               Remember me
@@ -197,8 +233,10 @@ export default function SignInPage() {
           variant="contained"
           fullWidth
           size="large"
+          onClick={handleLogin}
+          disabled={loading}
         >
-          Log in
+          {!loading ? "Sign Up" : "Loading"}
         </Button>
         <Box
           sx={{

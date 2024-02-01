@@ -1,28 +1,25 @@
 import bcrypt from "bcrypt";
-import db from "../models/db.js";
-import transporter from "../config/nodemailer.js";
+import db from "../models/db";
+import transporter from "../config/nodemailer";
 import { v4 as uuidv4 } from "uuid";
-import {
-  checkEmpty,
-  isUserExist,
-  validateInputs,
-} from "../helpers/registration.js";
+import { checkEmpty, isUserExist, validateInputs } from "../helpers/auth";
 import dotenv from "dotenv";
+import { IRouteHandlerCustom } from "../types/main";
 dotenv.config();
 
-export default async function register(req, res) {
+const register: IRouteHandlerCustom = async (req, res) => {
   try {
-    const emptyFieldError = checkEmpty(req.body);
-    if (emptyFieldError) {
-      return res.status(500).json(emptyFieldError);
+    const isEmpty = checkEmpty(req.body);
+    if (isEmpty) {
+      return res.status(400).json(isEmpty);
     }
     const validationFieldError = validateInputs(req.body);
     if (validationFieldError) {
-      return res.status(500).json(validationFieldError);
+      return res.status(400).json(validationFieldError);
     }
     const userExists = await isUserExist(req.body, db);
     if (userExists) {
-      return res.status(500).json(userExists);
+      return res.status(409).json(userExists);
     }
 
     const verificationToken = uuidv4();
@@ -36,7 +33,7 @@ export default async function register(req, res) {
     try {
       await transporter.sendMail(mailOptions);
     } catch (err) {
-      return res.status(500).json({ error: "Error sending mail" });
+      return res.status(503).json({ error: "Error sending mail" });
     }
 
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
@@ -48,11 +45,13 @@ export default async function register(req, res) {
       isVerified: false,
     });
 
-    return res.status(201).json({
+    return res.status(200).json({
       message: `Verification email sent to ${req.body.email}!`,
       user: user,
     });
   } catch (error) {
-    res.status(500).json({ error: "Error sending mail" });
+    res.status(503).json({ error: "Error sending mail" });
   }
-}
+};
+
+export default register;

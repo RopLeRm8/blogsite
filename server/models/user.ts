@@ -1,4 +1,6 @@
-export default (sequelize, DataTypes) => {
+import { DataTypes as DataTypesStatic, Sequelize } from "sequelize";
+
+export default (sequelize: Sequelize, DataTypes: typeof DataTypesStatic) => {
   const User = sequelize.define("User", {
     username: {
       type: DataTypes.STRING,

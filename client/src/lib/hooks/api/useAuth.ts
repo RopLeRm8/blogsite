@@ -10,7 +10,7 @@ interface UseApiResponse<T> {
   request: (config: AxiosRequestConfig) => Promise<void>;
 }
 
-export const useRegister = <T>(): UseApiResponse<T> => {
+export const useAuth = <T>(): UseApiResponse<T> => {
   const [data, setData] = useState<T | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
@@ -22,7 +22,8 @@ export const useRegister = <T>(): UseApiResponse<T> => {
         ...config,
         url: `${baseURL}${config.url}`,
       });
-      setData(response.data.message);
+      if (response.data.message) setData(response.data.message);
+      else setData(response.data);
     } catch (err) {
       if (axios.isAxiosError(err)) {
         setError(err.response?.data.error);

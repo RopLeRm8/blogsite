@@ -1,30 +1,29 @@
-const erruser = "Error creating user";
+import { IDB } from "../types/db";
+import { userRequest } from "../types/req";
+
 const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
 const passwordRegex = /^(?=.*[A-Z]).{5,8}$/;
 
-export const checkEmpty = (request) => {
-  if (request.username === "") {
+export const checkEmpty = (request: userRequest) => {
+  if (request.username === "" || undefined) {
     return {
-      message: erruser,
       error: "Username must not be empty",
     };
   }
   if (request.email === "") {
     return {
-      message: erruser,
       error: "Email must not be empty",
     };
   }
   if (request.password === "") {
     return {
-      message: erruser,
       error: "Password must not be empty",
     };
   }
   return null;
 };
 
-export const validateInputs = (request) => {
+export const validateInputs = (request: userRequest) => {
   if (
     !request.username ||
     request.username.length < 3 ||
@@ -55,7 +54,7 @@ export const validateInputs = (request) => {
   return null;
 };
 
-export const isUserExist = async (request, db) => {
+export const isUserExist = async (request: userRequest, db: IDB) => {
   const usernameExists = await db.User.findOne({
     where: { username: request.username },
   });

@@ -19,7 +19,7 @@ import PrivacyModal from "./PrivacyModal";
 import TermsModal from "./TermsModal";
 import { useGetGlobalValues } from "../../../hooks/useGlobalValues";
 import useFormsHandlers from "../../../hooks/useFormsHandlers";
-import { useRegister } from "src/lib/hooks/api/useRegister";
+import { useAuth } from "src/lib/hooks/api/useAuth";
 import useSnackbar from "../../../hooks/useSnackbar";
 export default function SignUpPage() {
   const [modalOpenPolicy, setModalOpenPolicy] = useState<boolean>(false);
@@ -42,7 +42,7 @@ export default function SignUpPage() {
   const { openModalPolicyHandler, openModalTermsHandler, visibleHandler } =
     useFormsHandlers({ setModalOpenPolicy, setModalOpenTerms, setVisible });
   const { request, error, data, setError, setData, loading } =
-    useRegister<string>();
+    useAuth<string>();
   const snackbar = useSnackbar({ error, data, setError, setData });
 
   const handleRegister = async () => {
