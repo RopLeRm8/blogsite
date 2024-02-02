@@ -6,8 +6,13 @@ const authenticate = (req: Request, res: Response) => {
   if (!rq.user) {
     return res.status(404).json({ error: "User not found" });
   }
-  const { password, isVerified, verificationToken, id, ...userData } =
-    rq.user.dataValues;
+  const {
+    password: ignored,
+    isVerified,
+    verificationToken,
+    id,
+    ...userData
+  } = rq.user.dataValues;
   res.json(userData);
 };
 

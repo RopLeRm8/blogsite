@@ -34,8 +34,8 @@ const login: IRouteHandlerCustom = async (req, res) => {
       return res.status(200).json({ message: "Login successful!" });
     const sessionId = generateSessionId();
     await setupSession(user, res, sessionId, rememberMe);
-  } catch (e) {
-    res.status(503).json({ error: `Error connecting to the server : ${e}` });
+  } catch (e: unknown) {
+    res.status(503).json({ error: `Error connecting to the server` });
   }
 };
 

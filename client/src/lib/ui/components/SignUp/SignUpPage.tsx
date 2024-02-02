@@ -41,8 +41,9 @@ export default function SignUpPage() {
 
   const { openModalPolicyHandler, openModalTermsHandler, visibleHandler } =
     useFormsHandlers({ setModalOpenPolicy, setModalOpenTerms, setVisible });
-  const { request, error, data, setError, setData, loading } =
-    useAuth<string>();
+  const { request, error, data, setError, setData, loading } = useAuth<
+    string | undefined
+  >();
   const snackbar = useSnackbar({ error, data, setError, setData });
 
   const handleRegister = async () => {
@@ -67,7 +68,7 @@ export default function SignUpPage() {
         autoHideDuration={4000}
         onClose={() => {
           setError(null);
-          setData(null);
+          setData(undefined);
         }}
       >
         {snackbar()}

@@ -49,7 +49,7 @@ const register: IRouteHandlerCustom = async (req, res) => {
       message: `Verification email sent to ${req.body.email}!`,
       user: user,
     });
-  } catch (error) {
+  } catch (error: unknown) {
     res.status(503).json({ error: "Error sending mail" });
   }
 };

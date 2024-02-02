@@ -37,8 +37,9 @@ export default function SignInPage() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [rememberMe, setRememberMe] = useState<boolean>(false);
-  const { request, loading, data, error, setError, setData } =
-    useAuth<string>();
+  const { request, loading, data, error, setError, setData } = useAuth<
+    string | undefined
+  >();
   const snackbar = useSnackbar({ error, data, setError, setData });
   const handleLogin = async () => {
     await request({
@@ -60,7 +61,7 @@ export default function SignInPage() {
         autoHideDuration={4000}
         onClose={() => {
           setError(null);
-          setData(null);
+          setData(undefined);
         }}
       >
         {snackbar()}

@@ -3,9 +3,9 @@ import React from "react";
 
 interface ISnackbar {
   error: string | null;
-  data: string | null;
+  data: string | undefined;
   setError: React.Dispatch<React.SetStateAction<string | null>>;
-  setData: React.Dispatch<React.SetStateAction<string | null>>;
+  setData: React.Dispatch<React.SetStateAction<string | undefined>>;
 }
 export default function useSnackbar({
   error,
@@ -15,7 +15,7 @@ export default function useSnackbar({
 }: ISnackbar) {
   const handleClose = () => {
     setError(null);
-    setData(null);
+    setData(undefined);
   };
   const renderContent = () => {
     if (error) {
